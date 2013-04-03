@@ -3,19 +3,27 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 
+let s:plugin_path = expand("<sfile>:p:h:h")
+
+if has("gui_macvim")
+  let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal 'rspec {spec}'"
+else
+  let g:rspec_command = "!echo rspec {spec} && rspec {spec}"
+endif
+
 function! RunCurrentSpecFile()
   if InSpecFile()
-    let l:command = "rspec -cfd " . @%
-    call SetLastSpecCommand(l:command)
-    call RunSpecs(l:command)
+    let l:spec = @%
+    call SetLastSpecCommand(l:spec)
+    call RunSpecs(l:spec)
   endif
 endfunction
 
 function! RunNearestSpec()
   if InSpecFile()
-    let l:command = "rspec -cfd " . @% . ":" . line(".")
-    call SetLastSpecCommand(l:command)
-    call RunSpecs(l:command)
+    let l:spec = @% . ":" . line(".")
+    call SetLastSpecCommand(l:spec)
+    call RunSpecs(l:spec)
   endif
 endfunction
 
@@ -29,10 +37,11 @@ function! InSpecFile()
   return match(expand("%"), "_spec.rb$") != -1
 endfunction
 
-function! SetLastSpecCommand(command)
-  let t:last_spec_command = a:command
+function! SetLastSpecCommand(spec)
+  let t:last_spec_command = a:spec
 endfunction
 
-function! RunSpecs(command)
-  execute ":w\|!clear && echo " . a:command . " && echo && " . a:command
+function! RunSpecs(spec)
+  write
+  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
 endfunction
