@@ -28,8 +28,8 @@ function! RunNearestSpec()
 endfunction
 
 function! RunLastSpec()
-  if exists("t:last_spec_command")
-    call RunSpecs(t:last_spec_command)
+  if exists("s:last_spec_command")
+    call RunSpecs(s:last_spec_command)
   endif
 endfunction
 
@@ -38,7 +38,7 @@ function! InSpecFile()
 endfunction
 
 function! SetLastSpecCommand(spec)
-  let t:last_spec_command = a:spec
+  let s:last_spec_command = a:spec
 endfunction
 
 function! RunSpecs(spec)
