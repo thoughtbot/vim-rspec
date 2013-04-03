@@ -5,6 +5,8 @@ if !exists("g:rspec_command")
 
   if has("gui_running") && has("gui_macvim")
     let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal '" . s:cmd . "'"
+  elseif has("gui_gtk2")
+    let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_gnome_terminal '" . s:cmd . "'"
   else
     let g:rspec_command = "!echo " . s:cmd . " && " . s:cmd
   endif

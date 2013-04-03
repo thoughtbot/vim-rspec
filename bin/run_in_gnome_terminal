@@ -1,0 +1,7 @@
+#!/bin/sh
+
+desktop=`xdotool get_desktop`
+window=`xdotool search --onlyvisible --all --desktop $desktop --class gnome-terminal | head -1`
+xdotool windowactivate --sync $window type "$@
+"
+xdotool windowactivate --sync $window key Return
