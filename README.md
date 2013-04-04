@@ -4,7 +4,7 @@ This is a lightweight Rspec runner for Vim.
 
 ## Installation
 
-Recommended installation with [vundle]('https://github.com/gmarik/vundle'):
+Recommended installation with [vundle](https://github.com/gmarik/vundle):
 
     Bundle 'thoughtbot/vim-rspec'
 
@@ -22,7 +22,7 @@ Example:
 
     let g:rspec_command = "!rspec --drb {spec}"
 
-## Licence
+## License
 
 rspec.vim is copyright © 2013 thoughtbot. It is free software, and may be
 redistributed under the terms specified in the `LICENSE` file.
