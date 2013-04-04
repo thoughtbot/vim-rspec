@@ -5,7 +5,7 @@ map <Leader>l :call RunLastSpec()<CR>
 
 let s:plugin_path = expand("<sfile>:p:h:h")
 
-if has("gui_macvim")
+if has("gui_running") && has("gui_macvim")
   let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal 'rspec {spec}'"
 else
   let g:rspec_command = "!echo rspec {spec} && rspec {spec}"
