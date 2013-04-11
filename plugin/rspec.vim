@@ -13,6 +13,8 @@ function! RunCurrentSpecFile()
     let l:spec = @%
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
+  else
+    RunLastSpec()
   endif
 endfunction
 
@@ -21,6 +23,8 @@ function! RunNearestSpec()
     let l:spec = @% . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
+  else
+    RunLastSpec()
   endif
 endfunction
 
