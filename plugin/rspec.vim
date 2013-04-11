@@ -1,8 +1,3 @@
-" Rspec mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-
 let s:plugin_path = expand("<sfile>:p:h:h")
 
 if has("gui_running") && has("gui_macvim")

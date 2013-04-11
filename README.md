@@ -6,13 +6,19 @@ This is a lightweight Rspec runner for Vim.
 
 Recommended installation with [vundle](https://github.com/gmarik/vundle):
 
-    Bundle 'thoughtbot/vim-rspec'
+```vim
+Bundle 'thoughtbot/vim-rspec'
+```
 
-## Default mappings
+## Recommended mappings
 
-    <leader>t - run the full spec file
-    <leader>s - run the spec file under the cursor
-    <leader>l - rerun the previous spec command
+```vim
+" Rspec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+
+```
 
 ## Configuration
 
@@ -20,7 +26,9 @@ Overwrite `g:rspec_command` variable to execute a custom command.
 
 Example:
 
-    let g:rspec_command = "!rspec --drb {spec}"
+```vim
+let g:rspec_command = "!rspec --drb {spec}"
+```
 
 ## License
 
