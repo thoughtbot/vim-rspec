@@ -6,13 +6,11 @@ map <Leader>l :call RunLastSpec()<CR>
 let s:plugin_path = expand("<sfile>:p:h:h")
 
 if !exists("g:rspec_command")
-  let g:rspec_command = "rspec {spec}"
-endif
-
-if has("gui_running") && has("gui_macvim")
-  let g:actual_rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal '" . g:rspec_command . "'"
-else
-  let g:actual_rspec_command = "!echo rspec {spec} && " . g:rspec_command
+  if has("gui_running") && has("gui_macvim")
+    let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal 'rspec {spec}'"
+  else
+    let g:rspec_command = "!echo rspec {spec} && rspec {spec}"
+  endif
 endif
 
 function! RunCurrentSpecFile()
@@ -47,5 +45,5 @@ endfunction
 
 function! RunSpecs(spec)
   write
-  execute substitute(g:actual_rspec_command, "{spec}", a:spec, "g")
+  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
 endfunction
