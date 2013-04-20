@@ -19,7 +19,7 @@ function! RunCurrentSpecFile()
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
-    RunLastSpec()
+    call RunLastSpec()
   endif
 endfunction
 
@@ -29,7 +29,7 @@ function! RunNearestSpec()
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
-    RunLastSpec()
+    call RunLastSpec()
   endif
 endfunction
 
