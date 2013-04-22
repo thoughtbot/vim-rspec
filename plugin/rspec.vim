@@ -13,6 +13,16 @@ if !exists("g:rspec_command")
   endif
 endif
 
+function! RunAllSpecs()
+  if InSpecFile()
+    let l:spec = "spec"
+    call SetLastSpecCommand(l:spec)
+    call RunSpecs(l:spec)
+  else
+    call RunLastSpec()
+  endif
+endfunction
+
 function! RunCurrentSpecFile()
   if InSpecFile()
     let l:spec = @%
