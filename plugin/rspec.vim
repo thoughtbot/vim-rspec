@@ -14,13 +14,9 @@ if !exists("g:rspec_command")
 endif
 
 function! RunAllSpecs()
-  if InSpecFile()
-    let l:spec = "spec"
-    call SetLastSpecCommand(l:spec)
-    call RunSpecs(l:spec)
-  else
-    call RunLastSpec()
-  endif
+  let l:spec = "spec"
+  call SetLastSpecCommand(l:spec)
+  call RunSpecs(l:spec)
 endfunction
 
 function! RunCurrentSpecFile()
