@@ -10,6 +10,8 @@ Recommended installation with [vundle](https://github.com/gmarik/vundle):
 Bundle 'thoughtbot/vim-rspec'
 ```
 
+If using zsh on OS X it may be necessary to run move `/etc/zshenv` to `/etc/zshrc`.
+
 ## Recommended mappings
 
 ```vim
