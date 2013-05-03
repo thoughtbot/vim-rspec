@@ -30,6 +30,15 @@ Example:
 let g:rspec_command = "!rspec --drb {spec}"
 ```
 
+This `g:rspec_command` variable can be used to support any number of test
+runners or pre-loaders. For example, you can use
+[Dispatch](https://github.com/tpope/dispatch) and
+[Zeus](https://github.com/burke/zeus) together with the following:
+
+```vim
+let g:rspec_command = "Dispatch zeus rspec {spec}"
+```
+
 ## License
 
 rspec.vim is copyright © 2013 thoughtbot. It is free software, and may be
