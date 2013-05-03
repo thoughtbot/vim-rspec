@@ -30,6 +30,16 @@ Example:
 let g:rspec_command = "!rspec --drb {spec}"
 ```
 
+To use [zeus](https://github.com/burke/zeus) or
+[spring](https://github.com/jonleighton/spring), set g:use_rails_preloader variable:
+
+```vim
+let g:use_rails_preloader = 'zeus'
+```
+
+If you use janus, you have to set this variable in the .vimrc.before
+file.
+
 ## License
 
 rspec.vim is copyright © 2013 thoughtbot. It is free software, and may be

@@ -4,7 +4,11 @@ if !exists("g:rspec_command")
   if has("gui_running") && has("gui_macvim")
     let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal 'rspec {spec}'"
   else
-    let s:cmd = "rspec {spec}"
+    if exists("use_rails_preloader")
+      let s:cmd = g:use_rails_preloader . " rspec {spec}"
+    else
+      let s:cmd = "rspec {spec}"
+    endif
     if exists(":Dispatch")
       let g:rspec_command = "Dispatch " . s:cmd
     else
