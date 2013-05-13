@@ -12,7 +12,7 @@ Bundle 'thoughtbot/vim-rspec'
 
 If using zsh on OS X it may be necessary to run move `/etc/zshenv` to `/etc/zshrc`.
 
-## Recommended mappings
+## Example of key mappings
 
 ```vim
 " Rspec.vim mappings
@@ -20,7 +20,6 @@ map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
-
 ```
 
 ## Configuration
