@@ -1,4 +1,5 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
+let g:rspec_write_before = 1
 
 if !exists("g:rspec_command")
   let s:cmd = "rspec {spec}"
@@ -51,6 +52,8 @@ function! SetLastSpecCommand(spec)
 endfunction
 
 function! RunSpecs(spec)
-  write
+  if g:rspec_write_before
+    write
+  endif
   execute substitute(g:rspec_command, "{spec}", a:spec, "g")
 endfunction
