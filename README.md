@@ -34,7 +34,7 @@ let g:rspec_command = "!rspec --drb {spec}"
 
 This `g:rspec_command` variable can be used to support any number of test
 runners or pre-loaders. For example, you can use
-[Dispatch](https://github.com/tpope/dispatch) and
+[Dispatch](https://github.com/tpope/vim-dispatch) and
 [Zeus](https://github.com/burke/zeus) together with the following:
 
 ```vim
