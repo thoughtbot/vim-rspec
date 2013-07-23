@@ -24,6 +24,8 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 ## Configuration
 
+### Rspec Command
+
 Overwrite `g:rspec_command` variable to execute a custom command.
 
 Example:
@@ -39,6 +41,15 @@ runners or pre-loaders. For example, you can use
 
 ```vim
 let g:rspec_command = "Dispatch zeus rspec {spec}"
+```
+
+### Write Before
+
+By default vim-rspec will `:write` the current buffer before running the spec
+command. If you would prefer to disable this, put the following in your vimrc:
+
+```vim
+let g:rspec_write_before = 0
 ```
 
 ## License
