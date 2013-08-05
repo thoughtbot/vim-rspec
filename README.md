@@ -41,6 +41,18 @@ runners or pre-loaders. For example, you can use
 let g:rspec_command = "Dispatch zeus rspec {spec}"
 ```
 
+Credits
+-------
+
+![thoughtbot](http://thoughtbot.com/images/tm/logo.png)
+
+rspec.vim is maintained by [thoughtbot, inc](http://thoughtbot.com/community)
+and [contributors](/thoughtbot/vim-rspec/graphs/contributors) like you. Thank
+you!
+
+It was strongly influenced by Gary Bernhardt's [Destroy All
+Software](https://www.destroyallsoftware.com/screencasts) screencasts.
+
 ## License
 
 rspec.vim is copyright © 2013 thoughtbot. It is free software, and may be
