@@ -51,6 +51,13 @@ To use iTerm instead of Terminal.app:
 let g:rspec_command_launcher = "iterm"
 ```
 
+To still be able to change the way rspec is called, without changing the command
+launcher:
+
+```vim
+let g:rspec_command_executable = "rspec --order default {spec}"
+```
+
 Credits
 -------
 
