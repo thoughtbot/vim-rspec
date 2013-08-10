@@ -41,6 +41,16 @@ runners or pre-loaders. For example, you can use
 let g:rspec_command = "Dispatch zeus rspec {spec}"
 ```
 
+When you're running inside MacVim, vim-rspec will run your specs in your
+Terminal, rather than in MacVim itself. The active tab should be in the proper
+directory for this to work.
+
+To use iTerm instead of Terminal.app:
+
+```vim
+let g:rspec_command_launcher = "iterm"
+```
+
 Credits
 -------
 

@@ -1,0 +1,25 @@
+#!/usr/bin/osascript
+
+on run argv
+  tell application "iTerm"
+    activate
+
+    try
+      set _session to current session of current terminal
+    on error
+      set _term to (make new terminal)
+      tell _term
+        launch session "Default"
+        set _session to current session
+      end tell
+    end try
+
+    tell _session
+      write text (item 1 of argv)
+    end tell
+  end tell
+
+  tell application "MacVim"
+    activate
+  end tell
+end run
