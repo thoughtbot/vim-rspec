@@ -51,6 +51,5 @@ function! SetLastSpecCommand(spec)
 endfunction
 
 function! RunSpecs(spec)
-  write
   execute substitute(g:rspec_command, "{spec}", a:spec, "g")
 endfunction
