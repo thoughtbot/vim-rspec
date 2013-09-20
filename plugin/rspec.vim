@@ -1,7 +1,15 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
 
+function! BundleCheck()
+  if filereadable("Gemfile")
+    let s:cmd = "bundle exec rspec {spec}"
+  else
+    let s:cmd = "rspec {spec}"
+  endif
+endfunction
+
 if !exists("g:rspec_command")
-  let s:cmd = "rspec {spec}"
+  call BundleCheck()
 
   if has("gui_running") && has("gui_macvim")
     let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal '" . s:cmd . "'"
