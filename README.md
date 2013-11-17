@@ -1,6 +1,6 @@
 # rspec.vim
 
-This is a lightweight Rspec runner for Vim.
+This is a lightweight RSpec runner for Vim and MacVim.
 
 ## Installation
 
@@ -10,21 +10,25 @@ Recommended installation with [vundle](https://github.com/gmarik/vundle):
 Bundle 'thoughtbot/vim-rspec'
 ```
 
-If using zsh on OS X it may be necessary to run move `/etc/zshenv` to `/etc/zshrc`.
+If using zsh on OS X it may be necessary to move `/etc/zshenv` to `/etc/zshrc`.
 
-## Example of key mappings
+## Configuration
+
+### Key mappings
+
+Add your preferred key mappings to your `.vimrc` file.
 
 ```vim
-" Rspec.vim mappings
+" RSpec.vim mappings
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 ```
 
-## Configuration
+### Custom command
 
-Overwrite `g:rspec_command` variable to execute a custom command.
+Overwrite the `g:rspec_command` variable to execute a custom command.
 
 Example:
 
