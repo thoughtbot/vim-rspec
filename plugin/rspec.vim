@@ -11,14 +11,14 @@ if !exists("g:rspec_command")
 endif
 
 function! RunAllSpecs()
-  let l:spec = "spec"
+  let l:spec = RootDir() . "/spec"
   call SetLastSpecCommand(l:spec)
   call RunSpecs(l:spec)
 endfunction
 
 function! RunCurrentSpecFile()
   if InSpecFile()
-    let l:spec = @%
+    let l:spec = expand("%:p")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
@@ -28,7 +28,7 @@ endfunction
 
 function! RunNearestSpec()
   if InSpecFile()
-    let l:spec = @% . ":" . line(".")
+    let l:spec = expand("%:p") . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
@@ -51,5 +51,18 @@ function! SetLastSpecCommand(spec)
 endfunction
 
 function! RunSpecs(spec)
-  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
+  write
+  let l:spec_dir = RootDir() . "/spec"
+  let l:spec = "-I " . RootDir() . " -I " . l:spec_dir . " " . a:spec
+  execute substitute(g:rspec_command, "{spec}", l:spec, "g")
+endfunction
+
+function! RootDir()
+  if exists("s:last_spec_command")
+    let l:spec_command = s:last_spec_command
+  else
+    let l:spec_command = expand("%:p")
+  endif
+
+  return substitute(l:spec_command, "/spec/.*", "", "")
 endfunction
