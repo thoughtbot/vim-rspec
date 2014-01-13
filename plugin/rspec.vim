@@ -11,7 +11,7 @@ if !exists("g:rspec_command")
 endif
 
 function! RunAllSpecs()
-  let l:spec = RootDir() . "/spec"
+  let l:spec = "spec"
   call SetLastSpecCommand(l:spec)
   call RunSpecs(l:spec)
 endfunction
@@ -51,18 +51,5 @@ function! SetLastSpecCommand(spec)
 endfunction
 
 function! RunSpecs(spec)
-  write
-  let l:spec_dir = RootDir() . "/spec"
-  let l:spec = "-I " . RootDir() . " -I " . l:spec_dir . " " . a:spec
-  execute substitute(g:rspec_command, "{spec}", l:spec, "g")
-endfunction
-
-function! RootDir()
-  if exists("s:last_spec_command")
-    let l:spec_command = s:last_spec_command
-  else
-    let l:spec_command = expand("%:p")
-  endif
-
-  return substitute(l:spec_command, "/spec/.*", "", "")
+  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
 endfunction
