@@ -18,7 +18,7 @@ endfunction
 
 function! RunCurrentSpecFile()
   if InSpecFile()
-    let l:spec = @%
+    let l:spec = expand("%:p")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
@@ -28,7 +28,7 @@ endfunction
 
 function! RunNearestSpec()
   if InSpecFile()
-    let l:spec = @% . ":" . line(".")
+    let l:spec = expand("%:p") . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
