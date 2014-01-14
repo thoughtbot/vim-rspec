@@ -18,7 +18,7 @@ endfunction
 
 function! RunCurrentSpecFile()
   if InSpecFile()
-    let l:spec = @%
+    let l:spec = EscapeSpec( @% )
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
@@ -28,7 +28,8 @@ endfunction
 
 function! RunNearestSpec()
   if InSpecFile()
-    let l:spec = @% . ":" . line(".")
+    let l:escaped = EscapeSpec( @% )
+    let l:spec = l:escaped . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
   else
@@ -44,6 +45,15 @@ endfunction
 
 function! InSpecFile()
   return match(expand("%"), "_spec.rb$") != -1 || match(expand("%"), ".feature$") != -1
+endfunction
+
+function! EscapeSpec(spec)
+  if has('win32') || has('win64')
+    let l:escaped = substitute(a:spec, "\\", "/", "g")
+  else
+    let l:escaped = a:spec
+  endif
+  return l:escaped
 endfunction
 
 function! SetLastSpecCommand(spec)
