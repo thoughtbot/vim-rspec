@@ -50,6 +50,11 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
+If you have configured vim to automatically set the working directory to the current file (i.e.
+set autochdir), it is helpful to add the current directory to rspecs include path:
+```vim
+let g:rsepc_command = "!bundle exec rspec -I . {rspec}"
+```
 Credits
 -------
 
