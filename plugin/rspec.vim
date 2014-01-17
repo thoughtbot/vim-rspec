@@ -11,7 +11,7 @@ if !exists("g:rspec_command")
 endif
 
 function! RunAllSpecs()
-  let l:spec = "spec"
+  let l:spec = "."
   call SetLastSpecCommand(l:spec)
   call RunSpecs(l:spec)
 endfunction
