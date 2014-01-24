@@ -5,7 +5,12 @@ on run argv
     if (count of windows) is 0 then
       do script argv
     else
-      do script argv in window 1
+      #if the window is busy open in a new window
+      if window 1 is busy then
+        do script argv
+      else
+        do script argv in window 1
+      end if
     end if
 
     activate
