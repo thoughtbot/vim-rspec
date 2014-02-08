@@ -50,6 +50,24 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
+### Custom runners
+
+Overwrite the `g:rspec_runner` variable to set a custom launch script. At the
+moment there are two MacVim-specific runners, i.e. `os_x_terminal` and
+`os_x_iterm`. The default is `os_x_terminal`, but you can set this to anything
+you want, provided you include the appropriate script inside the plugin's
+`bin/` directory.
+
+#### iTerm instead of Terminal
+
+If you use iTerm, you can set `g:rspec_runner` to use the included iterm
+launching script. This will run the specs in the last session of the current
+terminal.
+
+```vim
+let g:rspec_runner = "os_x_iterm"
+```
+
 Credits
 -------
 
