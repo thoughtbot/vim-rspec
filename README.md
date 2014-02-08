@@ -50,6 +50,15 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
+### iTerm instead of Terminal (MacVim only)
+
+If you use iTerm, you can set `g:rspec_terminal` to "iterm". This will run
+the specs in the last session of the current terminal.
+
+```vim
+let g:rspec_terminal = "iterm"
+```
+
 Credits
 -------
 
