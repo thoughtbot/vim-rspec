@@ -50,6 +50,29 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
+### Filename Pattern Matching
+
+The `g:rspec_patterns` variable can be passed a list of lists, which contain
+mappings of file names to spec names.  The first list element is a regex for
+matching the current file's name, and the second element is the spec file
+or directory to run.
+
+In this example, we're any time we run `RunCurrentSpecFile()` for a controller
+or javascript file, we run the `spec/features` directory.  Any time we run the
+command in a model file, we run that model's spec.
+
+Notice that the regex group matches from the first parameter can be
+interpolated into the second parameter with the syntax `{MATCH#}`, i.e.,
+`{MATCH1}` or `{MATCH3}`.
+
+```vim
+let g:rspec_patterns = [ 
+                       \ [ '\v^app/.+_controller\.rb$', "spec/features" ],
+                       \ [ '\v^app/.+(\.js|\.coffee)$', "spec/features" ],
+                       \ [ '\v^app/(.+)\.rb$', "spec/{MATCH1}_spec.rb" ]
+                     \ ]
+```
+
 Credits
 -------
 
