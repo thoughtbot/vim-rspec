@@ -50,6 +50,23 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
+When you're running inside MacVim, vim-rspec will run your specs in your
+Terminal, rather than in MacVim itself. The active tab should be in the proper
+directory for this to work.
+
+To use iTerm instead of Terminal.app:
+
+```vim
+let g:rspec_command_launcher = "iterm"
+```
+
+To still be able to change the way rspec is called, without changing the command
+launcher:
+
+```vim
+let g:rspec_command_executable = "rspec --order default {spec}"
+```
+
 Credits
 -------
 

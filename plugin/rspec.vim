@@ -1,10 +1,18 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
 
+if !exists("g:rspec_command_launcher")
+  let g:rspec_command_launcher = "terminal"
+endif
+
+if !exists("g:rspec_command_executable")
+  let g:rspec_command_executable = "rspec {cmd}"
+endif
+
 if !exists("g:rspec_command")
-  let s:cmd = "rspec {spec}"
+  let s:cmd = g:rspec_command_executable
 
   if has("gui_running") && has("gui_macvim")
-    let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal '" . s:cmd . "'"
+    let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_" . g:rspec_command_launcher . " '" . s:cmd . "'"
   else
     let g:rspec_command = "!clear && echo " . s:cmd . " && " . s:cmd
   endif
