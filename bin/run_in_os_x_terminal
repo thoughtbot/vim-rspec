@@ -12,7 +12,9 @@ on run argv
       if window 1 is busy then
         activate
         tell application "System Events" to keystroke "t" using {command down}
-        delay 0.2
+        repeat while contents of selected tab of window 1 starts with linefeed
+          delay 0.01
+        end repeat
         do script command in selected tab of window 1
       else
         do script command in window 1
