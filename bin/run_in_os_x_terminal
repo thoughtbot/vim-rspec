@@ -2,7 +2,7 @@
 
 on run argv
 
-  set command to runC(argv)
+  set command to argv
 
   tell application "Terminal"
     if (count of windows) is 0 then
@@ -24,20 +24,3 @@ on run argv
   end tell
 
 end run
-
-on runC(argv)
-
-    set argv_length to count of argv
-
-    #if two arguments are passed
-    #assume that the first one is the directory
-    #where command should be run
-    if argv_length > 1
-      set command to item 2 of argv
-      set pwd to item 1 of argv
-      return "cd " & pwd & " && " & command
-    else
-      return item 1 of argv
-    end
-
-end runC
