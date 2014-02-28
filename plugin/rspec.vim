@@ -1,10 +1,15 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
 
+if !exists("g:rspec_terminal")
+  let g:rspec_terminal = "terminal"
+endif
+
 if !exists("g:rspec_command")
   let s:cmd = "rspec {spec}"
 
   if has("gui_running") && has("gui_macvim")
-    let g:rspec_command = "silent !" . s:plugin_path . "/bin/run_in_os_x_terminal '" . s:cmd . "'"
+    let s:script_path = "/bin/run_in_os_x_" . g:rspec_terminal
+    let g:rspec_command = "silent !" . s:plugin_path . s:script_path . " '" . s:cmd . "'"
   else
     let g:rspec_command = "!clear && echo " . s:cmd . " && " . s:cmd
   endif
