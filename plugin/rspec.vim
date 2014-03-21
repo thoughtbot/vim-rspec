@@ -47,7 +47,7 @@ function! InRSpecFile()
 endfunction
 
 function! InJavascriptSpecFile()
-  return match(expand('%'), 'spec/javascripts/[a-z0-9].*\.\(coffee\|js\)$') != -1
+  return match(expand('%'), '[-_]spec\.\(coffee\|js\)$') != -1
 endfunction
 
 function! SetLastSpecCommand(spec)
