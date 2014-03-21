@@ -4,16 +4,6 @@ if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
 endif
 
-if !exists("g:rspec_command")
-  let s:cmd = "rspec {spec}"
-
-  if has("gui_running") && has("gui_macvim")
-    let g:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
-  else
-    let g:rspec_command = "!clear && echo " . s:cmd . " && " . s:cmd
-  endif
-endif
-
 function! RunAllSpecs()
   let l:spec = "spec"
   call SetLastSpecCommand(l:spec)
@@ -31,10 +21,12 @@ function! RunCurrentSpecFile()
 endfunction
 
 function! RunNearestSpec()
-  if InSpecFile()
+  if InRSpecFile()
     let l:spec = @% . ":" . line(".")
     call SetLastSpecCommand(l:spec)
     call RunSpecs(l:spec)
+  elseif InJavascriptSpecFile()
+    call RunCurrentSpecFile()
   else
     call RunLastSpec()
   endif
@@ -47,13 +39,38 @@ function! RunLastSpec()
 endfunction
 
 function! InSpecFile()
+  return InRSpecFile() || InJavascriptSpecFile()
+endfunction
+
+function! InRSpecFile()
   return match(expand("%"), "_spec.rb$") != -1 || match(expand("%"), ".feature$") != -1
+endfunction
+
+function! InJavascriptSpecFile()
+  return match(expand('%'), '[-_]spec\.\(coffee\|js\)$') != -1
 endfunction
 
 function! SetLastSpecCommand(spec)
   let s:last_spec_command = a:spec
 endfunction
 
-function! RunSpecs(spec)
-  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
+function! SetDefaultCommand(variable, command)
+  if !exists(a:variable)
+    if has("gui_running") && has("gui_macvim")
+      execute "let " . a:variable . " = \"silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . a:command . "'\""
+    else
+      execute "let " . a:variable . " = \"!clear && echo " . a:command . " && " . a:command . "\""
+    endif
+  endif
 endfunction
+
+function! RunSpecs(spec)
+  if InRSpecFile()
+    execute substitute(g:rspec_command, "{spec}", a:spec, "g")
+  elseif InJavascriptSpecFile()
+    execute substitute(g:javascript_command, "{spec}", a:spec, "g")
+  endif
+endfunction
+
+call SetDefaultCommand('g:rspec_command', 'rspec {spec}')
+call SetDefaultCommand('g:javascript_command', 'teaspoon {spec}')
