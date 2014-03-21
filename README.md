@@ -1,6 +1,6 @@
 # rspec.vim
 
-This is a lightweight RSpec runner for Vim and MacVim.
+This is a lightweight RSpec and Javascript spec runner for Vim and MacVim.
 
 ## Installation
 
@@ -26,14 +26,17 @@ map <Leader>l :call RunLastSpec()<CR>
 map <Leader>a :call RunAllSpecs()<CR>
 ```
 
-### Custom command
+### Custom commands
 
-Overwrite the `g:rspec_command` variable to execute a custom command.
+Overwrite the `g:rspec_command` variable to execute a custom command. You can do
+the same thing with `g:javascript_command`, which runs `teaspoon {spec}` by
+default.
 
 Example:
 
 ```vim
 let g:rspec_command = "!rspec --drb {spec}"
+let g:javascript_command = "!jasmine {spec}"
 ```
 
 This `g:rspec_command` variable can be used to support any number of test
@@ -68,12 +71,18 @@ terminal.
 let g:rspec_runner = "os_x_iterm"
 ```
 
+## Javascript tests
+
+In general, Javascript test runners can't scope to specific specs, only specific
+files. Therefore, `RunNearestSpec` in a Javascript spec actually calls
+`RunCurrentSpecFile`.
+
 Credits
 -------
 
 ![thoughtbot](http://thoughtbot.com/images/tm/logo.png)
 
-rspec.vim is maintained by [thoughtbot, inc](http://thoughtbot.com/community)
+vim-rspec is maintained by [thoughtbot, inc](http://thoughtbot.com/community)
 and [contributors](https://github.com/thoughtbot/vim-rspec/graphs/contributors)
 like you. Thank you!
 
@@ -82,7 +91,7 @@ Software](https://www.destroyallsoftware.com/screencasts) screencasts.
 
 ## License
 
-rspec.vim is copyright © 2014 thoughtbot. It is free software, and may be
+vim-rspec is copyright © 2014 thoughtbot. It is free software, and may be
 redistributed under the terms specified in the `LICENSE` file.
 
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
