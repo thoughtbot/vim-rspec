@@ -49,7 +49,7 @@ function! RunLastSpec()
 endfunction
 
 function! InSpecFile()
-  return match(expand("%"), "_spec.rb$") != -1 || match(expand("%"), ".feature$") != -1
+  return match(expand("%"), "_spec.rb$") != -1
 endfunction
 
 function! SetLastSpecCommand(spec)
