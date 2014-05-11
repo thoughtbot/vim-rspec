@@ -5,7 +5,11 @@ if !exists("g:rspec_runner")
 endif
 
 if !exists("g:rspec_command")
-  let s:cmd = "rspec {spec}"
+  if exists("g:rspec_clear") && g:rspec_clear == "on"
+    let s:cmd = "clear && rspec {spec}"
+  else
+    let s:cmd = "rspec {spec}"
+  endif
 
   if has("gui_running") && has("gui_macvim")
     let g:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
