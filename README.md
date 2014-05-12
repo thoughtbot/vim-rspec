@@ -68,6 +68,16 @@ terminal.
 let g:rspec_runner = "os_x_iterm"
 ```
 
+### Clearing the screen
+
+Set the following flag if you want to clear the screen before the tests run:
+
+```vim
+let g:rspec_clear = "on"
+```
+
+By default this option is off.
+
 Credits
 -------
 
