@@ -4,10 +4,10 @@ if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
 endif
 
-if !exists("g:rspec_command")
-  let s:cmd = "rspec {spec}"
-else
+if exists("g:rspec_command")
   let s:cmd = g:rspec_command
+else
+  let s:cmd = "rspec {spec}"
 endif
 
 if has("gui_running") && has("gui_macvim")
