@@ -10,7 +10,9 @@ else
   let s:cmd = "rspec {spec}"
 endif
 
-if has("gui_running") && has("gui_macvim")
+if exists("g:rspec_full_command")
+  let s:full_command = g:rspec_full_command
+elseif has("gui_running") && has("gui_macvim")
   let s:full_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
 elseif has("win32") && fnamemodify(&shell, ':t') ==? "cmd.exe"
   let s:full_command = "!cls && echo " . s:cmd . " && " . s:cmd
