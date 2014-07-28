@@ -4,18 +4,16 @@ if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
 endif
 
-if exists("g:rspec_command")
-  let s:cmd = g:rspec_command
-else
+if !exists("g:rspec_command")
   let s:cmd = "rspec {spec}"
-endif
 
-if has("gui_running") && has("gui_macvim")
-  let s:full_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
-elseif has("win32") && fnamemodify(&shell, ':t') ==? "cmd.exe"
-  let s:full_command = "!cls && echo " . s:cmd . " && " . s:cmd
-else
-  let s:full_command = "!clear && echo " . s:cmd . " && " . s:cmd
+  if has("gui_running") && has("gui_macvim")
+    let g:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
+  elseif has("win32") && fnamemodify(&shell, ':t') ==? "cmd.exe"
+    let g:rspec_command = "!cls && echo " . s:cmd . " && " . s:cmd
+  else
+    let g:rspec_command = "!clear && echo " . s:cmd . " && " . s:cmd
+  endif
 endif
 
 function! RunAllSpecs()
@@ -59,5 +57,5 @@ function! SetLastSpecCommand(spec)
 endfunction
 
 function! RunSpecs(spec)
-  execute substitute(s:full_command, "{spec}", a:spec, "g")
+  execute substitute(g:rspec_command, "{spec}", a:spec, "g")
 endfunction
