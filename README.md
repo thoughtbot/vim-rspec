@@ -7,7 +7,7 @@ This is a lightweight RSpec runner for Vim and MacVim.
 Recommended installation with [vundle](https://github.com/gmarik/vundle):
 
 ```vim
-Bundle 'thoughtbot/vim-rspec'
+Plugin 'thoughtbot/vim-rspec'
 ```
 
 If using zsh on OS X it may be necessary to move `/etc/zshenv` to `/etc/zshrc`.
