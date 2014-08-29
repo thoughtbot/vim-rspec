@@ -4,8 +4,12 @@ if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
 endif
 
+if !exists("g:rspec_use_external_runner")
+  let g:rspec_use_external_runner = 1
+endif
+
 if exists("g:rspec_command")
-  if has("gui_running") && has("gui_macvim")
+  if has("gui_running") && has("gui_macvim") && g:rspec_use_external_runner
     let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . g:rspec_command . "'"
   else
     let s:rspec_command = g:rspec_command
