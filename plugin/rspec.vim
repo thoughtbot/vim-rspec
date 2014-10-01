@@ -22,6 +22,14 @@ else
   endif
 endif
 
+function! SetSpecCommand(new_command)
+  let s:rspec_command = a:new_command
+endfunction
+
+function! GetSpecCommand()
+  return s:rspec_command
+endfunction
+
 function! RunAllSpecs()
   let l:spec = "spec"
   call SetLastSpecCommand(l:spec)
