@@ -11,7 +11,7 @@ if exists("g:rspec_command")
     let s:rspec_command = g:rspec_command
   endif
 else
-  let s:cmd = "rspec {spec}"
+  let s:cmd = "rspec {options} {spec}"
 
   if has("gui_running") && has("gui_macvim")
     let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
@@ -22,17 +22,41 @@ else
   endif
 endif
 
+function! SetSpecCommand(new_command)
+  let s:rspec_command = a:new_command
+endfunction
+
+function! GetSpecCommand()
+  return s:rspec_command
+endfunction
+
 function! RunAllSpecs()
   let l:spec = "spec"
-  call SetLastSpecCommand(l:spec)
-  call RunSpecs(l:spec)
+  call SetLastSpecCommand(l:spec, '')
+  call RunSpecs(l:spec, '')
+endfunction
+
+function! RunAllSpecsWithOptions(options)
+  let l:spec = "spec"
+  call SetLastSpecCommand(l:spec, a:options)
+  call RunSpecs(l:spec, a:options)
 endfunction
 
 function! RunCurrentSpecFile()
   if InSpecFile()
     let l:spec = @%
-    call SetLastSpecCommand(l:spec)
-    call RunSpecs(l:spec)
+    call SetLastSpecCommand(l:spec, '')
+    call RunSpecs(l:spec, '')
+  else
+    call RunLastSpec()
+  endif
+endfunction
+
+function! RunCurrentSpecFileWithOptions(options)
+  if InSpecFile()
+    let l:spec = @%
+    call SetLastSpecCommand(l:spec, a:options)
+    call RunSpecs(l:spec, a:options)
   else
     call RunLastSpec()
   endif
@@ -41,8 +65,18 @@ endfunction
 function! RunNearestSpec()
   if InSpecFile()
     let l:spec = @% . ":" . line(".")
-    call SetLastSpecCommand(l:spec)
-    call RunSpecs(l:spec)
+    call SetLastSpecCommand(l:spec, '')
+    call RunSpecs(l:spec, '')
+  else
+    call RunLastSpec()
+  endif
+endfunction
+
+function! RunNearestSpecWithOptions(options)
+  if InSpecFile()
+    let l:spec = @% . ":" . line(".")
+    call SetLastSpecCommand(l:spec, a:options)
+    call RunSpecs(l:spec, a:options)
   else
     call RunLastSpec()
   endif
@@ -50,7 +84,11 @@ endfunction
 
 function! RunLastSpec()
   if exists("s:last_spec_command")
-    call RunSpecs(s:last_spec_command)
+    if exists("s:last_spec_options")
+      call RunSpecs(s:last_spec_command, s:last_spec_options)
+    else
+      call RunSpecs(s:last_spec_command, '')
+    endif
   endif
 endfunction
 
@@ -58,10 +96,12 @@ function! InSpecFile()
   return match(expand("%"), "_spec.rb$") != -1
 endfunction
 
-function! SetLastSpecCommand(spec)
+function! SetLastSpecCommand(spec, options)
   let s:last_spec_command = a:spec
+  let s:last_spec_options = a:options
 endfunction
 
-function! RunSpecs(spec)
-  execute substitute(s:rspec_command, "{spec}", a:spec, "g")
+function! RunSpecs(spec, options)
+  let l:with_options = substitute(s:rspec_command, "{options}", a:options, "g")
+  execute substitute(l:with_options, "{spec}", a:spec, "g")
 endfunction
