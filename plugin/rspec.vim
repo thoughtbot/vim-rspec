@@ -5,7 +5,7 @@ if !exists("g:rspec_runner")
 endif
 
 if exists("g:rspec_command")
-  if has("gui_running") && has("gui_macvim")
+  if has("gui_running") && has("gui_macvim") && g:rspec_command !~ "^Dispatch"
     let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . g:rspec_command . "'"
   else
     let s:rspec_command = g:rspec_command
