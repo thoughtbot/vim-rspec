@@ -17,6 +17,8 @@ on run argv
     end tell
   end tell
 
+  delay 0.02
+
   tell application "MacVim"
     activate
   end tell
