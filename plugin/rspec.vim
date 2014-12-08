@@ -1,26 +1,29 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
+let s:forceGUI = 0
 
 if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
 endif
 
-if exists("g:rspec_command")
-  if has("gui_running") && has("gui_macvim")
-    let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . g:rspec_command . "'"
+function! s:SetupCommand()
+  if exists("g:rspec_command")
+    if s:isGUI()
+      let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . g:rspec_command . "'"
+    else
+      let s:rspec_command = g:rspec_command
+    endif
   else
-    let s:rspec_command = g:rspec_command
-  endif
-else
-  let s:cmd = "rspec {spec}"
+    let s:cmd = "rspec {spec}"
 
-  if has("gui_running") && has("gui_macvim")
-    let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
-  elseif has("win32") && fnamemodify(&shell, ':t') ==? "cmd.exe"
-    let s:rspec_command = "!cls && echo " . s:cmd . " && " . s:cmd
-  else
-    let s:rspec_command = "!clear && echo " . s:cmd . " && " . s:cmd
+    if s:isGUI()
+      let s:rspec_command = "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . s:cmd . "'"
+    elseif has("win32") && fnamemodify(&shell, ':t') ==? "cmd.exe"
+      let s:rspec_command = "!cls && echo " . s:cmd . " && " . s:cmd
+    else
+      let s:rspec_command = "!clear && echo " . s:cmd . " && " . s:cmd
+    endif
   endif
-endif
+endfunction
 
 function! RunAllSpecs()
   let l:spec = "spec"
@@ -49,8 +52,8 @@ function! RunNearestSpec()
 endfunction
 
 function! RunLastSpec()
-  if exists("s:last_spec_command")
-    call RunSpecs(s:last_spec_command)
+  if exists("s:last_spec_location")
+    call RunSpecs(s:last_spec_location)
   endif
 endfunction
 
@@ -59,9 +62,26 @@ function! InSpecFile()
 endfunction
 
 function! SetLastSpecCommand(spec)
-  let s:last_spec_command = a:spec
+  let s:last_spec_location = a:spec
 endfunction
 
 function! RunSpecs(spec)
   execute substitute(s:rspec_command, "{spec}", a:spec, "g")
 endfunction
+
+function! s:isGUI()
+  return s:forceGUI || (has("gui_running") && has("gui_macvim"))
+endfunction
+
+" begin vspec config
+function! rspec#testScope()
+  return s:
+endfunction
+
+function! rspec#sid()
+    return maparg('<SID>', 'n')
+endfunction
+nnoremap <SID> <SID>
+" end vspec config
+
+call s:SetupCommand()
