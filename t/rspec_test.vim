@@ -1,46 +1,54 @@
 source plugin/rspec.vim
 
-call vspec#hint({"scope": "rspec#testScope()", "sid": "rspec#sid()"})
+call vspec#hint({"scope": "rspec#scope()", "sid": "rspec#sid()"})
 
-describe "SetupCommand"
-  it "sets the default command"
-    Expect Ref("s:rspec_command") == "!clear && echo rspec {spec} && rspec {spec}"
-  end
+let s:filename = "model_spec.rb"
 
+describe "RunSpecs"
   context "when g:rspec_command is not defined"
+    it "sets the default command"
+      call Call("s:RunSpecs", s:filename)
+
+      Expect Ref("s:rspec_command") == "!clear && echo rspec model_spec.rb && rspec model_spec.rb"
+    end
+
     context "when in GUI"
       context "when g:rspec_runner is defined"
         before
-          call Set("s:forceGUI", 1)
+          call Set("s:force_gui", 1)
           let s:original_runner = g:rspec_runner
           let g:rspec_runner = "iterm"
         end
 
         after
           let g:rspec_runner = s:original_runner
-          call Set("s:forceGUI", 0)
+          call Set("s:force_gui", 0)
         end
 
         it "sets the command with provided runner"
-          call Call("s:SetupCommand")
+          let expected = "^silent !\.\*/bin/iterm 'rspec " . s:filename . "'$"
 
-          Expect Ref("s:rspec_command") =~ "^silent !\.\*/bin/iterm 'rspec {spec}'$"
+          call Call("s:RunSpecs", s:filename)
+
+          Expect Ref("s:rspec_command") =~ expected
         end
       end
 
       context "when rspec_runner is not defined"
         before
-          call Set("s:forceGUI", 1)
+          call Set("s:force_gui", 1)
         end
 
         after
-          call Set("s:forceGUI", 0)
+          call Set("s:force_gui", 0)
         end
 
         it "sets the command with default runner"
-          call Call("s:SetupCommand")
+          let expected = "^silent !\.\*/bin/os_x_terminal 'rspec " . s:filename . "'$"
 
-          Expect Ref("s:rspec_command") =~ "^silent !\.\*/bin/os_x_terminal 'rspec {spec}'$"
+          call Call("s:RunSpecs", s:filename)
+
+          Expect Ref("s:rspec_command") =~ expected
         end
       end
     end
@@ -48,8 +56,8 @@ describe "SetupCommand"
 
   context "when g:rspec_command is defined"
     before
-      call Set("s:forceGUI", 0)
-      let g:rspec_command = "Dispatch rspec {spec}"
+      call Set("s:force_gui", 0)
+      let g:rspec_command = "!Dispatch rspec {spec}"
     end
 
     after
@@ -58,25 +66,28 @@ describe "SetupCommand"
 
     context "when not in GUI"
       it "sets the provided command"
-        call Call("s:SetupCommand")
+        let expected = "!Dispatch rspec " . s:filename
 
-        Expect Ref("s:rspec_command") == "Dispatch rspec {spec}"
+        call Call("s:RunSpecs", s:filename)
+
+        Expect Ref("s:rspec_command") == expected
       end
     end
 
     context "when in GUI"
       before
-        call Set("s:forceGUI", 1)
+        call Set("s:force_gui", 1)
       end
 
       after
-        call Set("s:forceGUI", 0)
+        call Set("s:force_gui", 0)
       end
 
       it "sets the provided GUI command"
-        call Call("s:SetupCommand")
+        let expected = "^silent !\.\*/bin/os_x_terminal '!Dispatch rspec " . s:filename . "'$"
+        call Call("s:RunSpecs", s:filename)
 
-        Expect Ref("s:rspec_command") =~ "^silent !\.\*/bin/os_x_terminal 'Dispatch rspec {spec}'$"
+        Expect Ref("s:rspec_command") =~ expected
       end
     end
   end
