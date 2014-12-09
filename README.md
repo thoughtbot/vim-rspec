@@ -78,7 +78,7 @@ Install the `vim-flavor` gem, install the dependencies and run the tests:
 ```
 gem install vim-flavor
 vim-flavor install
-vim-flavor test
+rake
 ```
 
 Credits
