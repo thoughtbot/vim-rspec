@@ -65,15 +65,15 @@ function! s:RspecCommandProvided()
   return exists("g:rspec_command")
 endfunction
 
-function s:DefaultTerminalCommand()
+function! s:DefaultTerminalCommand()
   return "!" . s:ClearCommand() . " && echo " . s:default_command . " && " . s:default_command
 endfunction
 
-function s:CurrentFilePath()
+function! s:CurrentFilePath()
   return @%
 endfunction
 
-function s:GuiCommand(command)
+function! s:GuiCommand(command)
   return "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . a:command . "'"
 endfunction
 
