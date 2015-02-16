@@ -27,6 +27,8 @@ map <Leader>ra :call RunAllSpecs()<CR>
 map <Leader>rt :call RunAllSpecsFilteredByTags()<CR>
 ```
 
+See [Filtering Specs](#filter) for more details of `RunAllSpecsFilteredByTags`.
+
 ### Custom command
 
 Overwrite the `g:rspec_command` variable to execute a custom command.
@@ -69,6 +71,21 @@ terminal.
 let g:rspec_runner = "os_x_iterm"
 ```
 
+## <a name='filter'></a> Filtering Specs
+
+After running `RunAllSpecsFilteredByTags` either by directly calling it or using
+its key mapping, Vim will prompt `tags: ` and wait for your input. If you don't
+want to filter anything, hit enter and all specs will be run. If you want to
+only run some specs with certain tag(s), for example: `fast`, type `fast` and
+hit enter. Or if you don't want to run some specs with certain tag(s), for
+example: `slow`, type `~slow` and hit enter. And you can combine these together.
+For example, `XXX ~slow` means 'run specs being tagged with XXX but not those
+slow ones'. Basically it takes the tags you feed to it, and pass that to RSpecs
+`--tag` option.
+
+For more info on RSpec's `--tag` option, have a look at here [--tag
+option](http://www.relishapp.com/rspec/rspec-core/v/2-4/docs/command-line/tag-option)
+
 ## Running tests
 
 Tests are written using [`vim-vspec`](https://github.com/kana/vim-vspec)
@@ -100,3 +117,4 @@ rspec.vim is copyright © 2014 thoughtbot. It is free software, and may be
 redistributed under the terms specified in the `LICENSE` file.
 
 The names and logos for thoughtbot are trademarks of thoughtbot, inc.
+
