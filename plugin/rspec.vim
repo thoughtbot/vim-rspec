@@ -1,6 +1,7 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
 let s:default_command = "rspec {spec}"
 let s:force_gui = 0
+let s:spec_tags = ""
 
 if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
@@ -35,12 +36,48 @@ function! RunLastSpec()
   endif
 endfunction
 
+function! RunAllSpecsFilteredByTags()
+  call s:GetTags()
+  call RunAllSpecs()
+endfunction
+
 " === local functions ===
 
 function! s:RunSpecs(spec_location)
-  let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:spec_location, "g")
-
+  call s:ComposeRspecCommand(a:spec_location)
+  call s:ResetTags()
   execute s:rspec_command
+endfunction
+
+function! s:ComposeRspecCommand(spec_location)
+  call s:RspecCommandWithLocation(a:spec_location)
+  call s:AddTagsToRspecCommand()
+endfunction
+
+function! s:RspecCommandWithLocation(spec_location)
+  let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:spec_location, "g")
+endfunction
+
+function! s:AddTagsToRspecCommand()
+  let s:rspec_command = s:rspec_command.s:RspecTags()
+endfunction
+
+function! s:RspecTags()
+  if strlen(s:spec_tags) > 0
+    return " --tag ".s:spec_tags
+  else
+    return ""
+  endif
+endfunction
+
+function! s:ResetTags()
+  let s:spec_tags = ""
+endfunction
+
+function! s:GetTags()
+  call inputsave()
+  let s:spec_tags = input("tags: ")
+  call inputrestore()
 endfunction
 
 function! s:InSpecFile()
