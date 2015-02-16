@@ -77,6 +77,7 @@ endfunction
 function! s:GetTags()
   call inputsave()
   let s:spec_tags = input("tags: ")
+  :redraw!
   call inputrestore()
 endfunction
 
