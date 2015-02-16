@@ -20,10 +20,11 @@ Add your preferred key mappings to your `.vimrc` file.
 
 ```vim
 " RSpec.vim mappings
-map <Leader>t :call RunCurrentSpecFile()<CR>
-map <Leader>s :call RunNearestSpec()<CR>
-map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
+map <Leader>rf :call RunCurrentSpecFile()<CR>
+map <Leader>rn :call RunNearestSpec()<CR>
+map <Leader>rl :call RunLastSpec()<CR>
+map <Leader>ra :call RunAllSpecs()<CR>
+map <Leader>rt :call RunAllSpecsFilteredByTags()<CR>
 ```
 
 ### Custom command
