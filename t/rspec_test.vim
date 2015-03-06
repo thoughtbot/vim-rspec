@@ -92,3 +92,56 @@ describe "RunSpecs"
     end
   end
 end
+
+describe "RunCurrentSpecFile"
+  context "when not in a spec file"
+    before
+      let g:rspec_command = "!rspec {spec}"
+    end
+
+    after
+      unlet g:rspec_command
+    end
+
+    context "when line number is not set"
+      it "runs the last spec file"
+        call Set("s:last_spec_file", "model_spec.rb")
+
+        call Call("RunCurrentSpecFile")
+
+        Expect Ref("s:rspec_command") == "!rspec model_spec.rb"
+      end
+    end
+
+    context "when line number is set"
+      it "runs the last spec file"
+        call Set("s:last_spec_file", "model_spec.rb")
+        call Set("s:last_spec_line", 42)
+
+        call Call("RunCurrentSpecFile")
+
+        Expect Ref("s:rspec_command") == "!rspec model_spec.rb"
+      end
+    end
+  end
+end
+
+describe "RunNearestSpec"
+  context "not in a spec file"
+    before
+      let g:rspec_command = "!rspec {spec}"
+    end
+
+    after
+      unlet g:rspec_command
+    end
+
+    it "runs the last spec file with line"
+      call Set("s:last_spec_file_with_line", "model_spec.rb:42")
+
+      call Call("RunNearestSpec")
+
+      Expect Ref("s:rspec_command") == "!rspec model_spec.rb:42"
+    end
+  end
+end
