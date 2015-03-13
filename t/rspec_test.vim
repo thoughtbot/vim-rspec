@@ -145,3 +145,31 @@ describe "RunNearestSpec"
     end
   end
 end
+
+describe "RunLastSpec"
+  before
+    let g:rspec_command = "!rspec {spec}"
+  end
+
+  after
+    unlet g:rspec_command
+  end
+
+  context "when s:last_spec is set"
+    it "executes the last spec"
+      call Set("s:last_spec", "model_spec.rb:42")
+
+      call Call("RunLastSpec")
+
+      Expect Ref("s:rspec_command") == "!rspec model_spec.rb:42"
+    end
+  end
+end
+
+describe "RunAllSpecs"
+  it "sets s:last_spec to 'spec'"
+    call Call("RunAllSpecs")
+
+    Expect Ref("s:last_spec") == "spec"
+  end
+end

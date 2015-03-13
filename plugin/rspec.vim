@@ -7,12 +7,14 @@ if !exists("g:rspec_runner")
 endif
 
 function! RunAllSpecs()
-  call s:RunSpecs("spec")
+  let s:last_spec = "spec"
+  call s:RunSpecs(s:last_spec)
 endfunction
 
 function! RunCurrentSpecFile()
   if s:InSpecFile()
     let s:last_spec_file = s:CurrentFilePath()
+    let s:last_spec = s:last_spec_file
     call s:RunSpecs(s:last_spec_file)
   elseif exists("s:last_spec_file")
     call s:RunSpecs(s:last_spec_file)
@@ -23,9 +25,16 @@ function! RunNearestSpec()
   if s:InSpecFile()
     let s:last_spec_file = s:CurrentFilePath()
     let s:last_spec_file_with_line = s:last_spec_file . ":" . line(".")
+    let s:last_spec = s:last_spec_file_with_line
     call s:RunSpecs(s:last_spec_file_with_line)
   elseif exists("s:last_spec_file_with_line")
     call s:RunSpecs(s:last_spec_file_with_line)
+  endif
+endfunction
+
+function! RunLastSpec()
+  if exists("s:last_spec")
+    call s:RunSpecs(s:last_spec)
   endif
 endfunction
 
