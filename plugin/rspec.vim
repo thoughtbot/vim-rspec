@@ -47,7 +47,11 @@ function! s:RunSpecs(spec_location)
 endfunction
 
 function! s:InSpecFile()
-  return match(expand("%"), "_spec.rb$") != -1
+  if exists("g:rspec_not_match_spec_filename") && g:rspec_not_match_spec_filename
+    return 1
+  else
+    return match(expand("%"), "_spec.rb$") != -1
+  endif
 endfunction
 
 function! s:RspecCommand()
