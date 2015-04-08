@@ -1,0 +1,37 @@
+#!/usr/bin/osascript
+
+# PLEASE NOTE: This launcher is for use with the upcoming release of
+# iTerm2. Available currently as the nightly build downloads from
+# http://iterm2.com/nightly/latest
+#
+# On the trivial side, the Application name changes from iTerm to
+# iTerm2.  However, notably the AppleScript API used by iTerm2 has a
+# several breaking changes, and existing iTerm AppleScripts will not
+# work.
+
+# If you would like to get documentation for the new iTerm2 /
+# AppleScript API.  Open the AppleScript Editor on OSX, get the
+# Library window (Cmd Shift L) Click the (+) button and select iTerm2
+# from the /Applications folder.
+
+# PLEASE NOTE: the download nightlies at the time of writing use
+# filename iTerm.app, we recommend you rename it to iTerm2.app for
+# convenience (this is so it matches the bundle app/id name.)
+
+on run argv
+  tell application "iTerm2"
+    set _window to (current window)
+    if _window is equal to missing value then
+      create window with default profile
+    end if
+    tell current window
+      tell current session
+        write text (item 1 of argv)
+      end tell
+    end tell
+  end tell
+
+  tell application "MacVim"
+    activate
+  end tell
+end run
