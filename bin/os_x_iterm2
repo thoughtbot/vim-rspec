@@ -1,0 +1,23 @@
+#!/usr/bin/osascript
+
+# Use vim config: 
+#
+#     let g:rspec_runner = "os_x_iterm2"
+#
+
+on run argv
+  tell application "iTerm2"
+    if current window is equal to missing value then
+      create window with default profile
+    end if
+    tell current window
+      tell current session
+        write text (item 1 of argv)
+      end tell
+    end tell
+  end tell
+
+  tell application "MacVim"
+    activate
+  end tell
+end run
