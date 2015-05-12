@@ -77,7 +77,7 @@ function! s:CurrentFilePath()
 endfunction
 
 function! s:GuiCommand(command)
-  return "silent !" . s:plugin_path . "/bin/" . g:rspec_runner . " '" . a:command . "'"
+  return "silent ! '" . s:plugin_path . "/bin/" . g:rspec_runner . "' '" . a:command . "'"
 endfunction
 
 function! s:ClearCommand()
