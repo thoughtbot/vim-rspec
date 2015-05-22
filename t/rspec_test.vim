@@ -13,16 +13,21 @@ describe "RunSpecs"
     end
 
     context "when in GUI"
-      context "when g:rspec_runner is defined"
+      before
+        call Set("s:force_gui", 1)
+      end
+
+      after
+        call Set("s:force_gui", 0)
+      end
+
+      context "when rspec_runner is defined"
         before
-          call Set("s:force_gui", 1)
-          let s:original_runner = g:rspec_runner
           let g:rspec_runner = "iterm"
         end
 
         after
-          let g:rspec_runner = s:original_runner
-          call Set("s:force_gui", 0)
+          unlet g:rspec_runner
         end
 
         it "sets the command with provided runner"
@@ -35,20 +40,15 @@ describe "RunSpecs"
       end
 
       context "when rspec_runner is not defined"
-        before
-          call Set("s:force_gui", 1)
-        end
+        it "sets the default command"
+          let expected = "rspec " . s:filename
 
-        after
-          call Set("s:force_gui", 0)
-        end
-
-        it "sets the command with default runner"
-          let expected = "^silent ! '\.\*/bin/os_x_terminal' 'rspec " . s:filename . "'$"
-
-          call Call("s:RunSpecs", s:filename)
-
-          Expect Ref("s:rspec_command") =~ expected
+          try
+            call Call("s:RunSpecs", s:filename)
+          catch
+          finally
+            Expect Ref("s:rspec_command") =~ expected
+          endtry
         end
       end
     end
@@ -83,11 +83,30 @@ describe "RunSpecs"
         call Set("s:force_gui", 0)
       end
 
-      it "sets the provided GUI command"
-        let expected = "^silent ! '\.\*/bin/os_x_terminal' '!Dispatch rspec " . s:filename . "'$"
-        call Call("s:RunSpecs", s:filename)
+      context "and rspec_runner is defined"
+        before
+          let g:rspec_runner = "fake_runner"
+        end
 
-        Expect Ref("s:rspec_command") =~ expected
+        after
+          unlet g:rspec_runner
+        end
+
+        it "sets the provided GUI command"
+          let expected = "^silent ! '\.\*/bin/fake_runner' '!Dispatch rspec " . s:filename . "'$"
+          call Call("s:RunSpecs", s:filename)
+
+          Expect Ref("s:rspec_command") =~ expected
+        end
+      end
+
+      context "and rspec_runner is not defined"
+        it "sets the provided rspec command"
+          let expected = "Dispatch rspec " . s:filename
+          call Call("s:RunSpecs", s:filename)
+
+          Expect Ref("s:rspec_command") =~ expected
+        end
       end
     end
   end
