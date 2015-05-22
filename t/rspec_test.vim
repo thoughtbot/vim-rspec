@@ -26,7 +26,7 @@ describe "RunSpecs"
         end
 
         it "sets the command with provided runner"
-          let expected = "^silent !\.\*/bin/iterm 'rspec " . s:filename . "'$"
+          let expected = "^silent ! '\.\*/bin/iterm' 'rspec " . s:filename . "'$"
 
           call Call("s:RunSpecs", s:filename)
 
@@ -44,7 +44,7 @@ describe "RunSpecs"
         end
 
         it "sets the command with default runner"
-          let expected = "^silent !\.\*/bin/os_x_terminal 'rspec " . s:filename . "'$"
+          let expected = "^silent ! '\.\*/bin/os_x_terminal' 'rspec " . s:filename . "'$"
 
           call Call("s:RunSpecs", s:filename)
 
@@ -84,7 +84,7 @@ describe "RunSpecs"
       end
 
       it "sets the provided GUI command"
-        let expected = "^silent !\.\*/bin/os_x_terminal '!Dispatch rspec " . s:filename . "'$"
+        let expected = "^silent ! '\.\*/bin/os_x_terminal' '!Dispatch rspec " . s:filename . "'$"
         call Call("s:RunSpecs", s:filename)
 
         Expect Ref("s:rspec_command") =~ expected
