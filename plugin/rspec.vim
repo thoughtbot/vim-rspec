@@ -7,7 +7,7 @@ if !exists("g:rspec_runner")
 endif
 
 function! RunAllSpecs()
-  let s:last_spec = "spec"
+  let s:last_spec = ""
   call s:RunSpecs(s:last_spec)
 endfunction
 
