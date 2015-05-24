@@ -170,6 +170,6 @@ describe "RunAllSpecs"
   it "sets s:last_spec to 'spec'"
     call Call("RunAllSpecs")
 
-    Expect Ref("s:last_spec") == "spec"
+    Expect Ref("s:last_spec") == ""
   end
 end
