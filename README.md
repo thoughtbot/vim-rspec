@@ -77,6 +77,15 @@ Instead use the `os_x_iterm2` runner, configure it like so:
 let g:rspec_runner = "os_x_iterm2"
 ```
 
+### Custom spec file pattern
+
+If you want rspec against files that are not suffixed with *_spec.rb* you can
+customize the regular expression
+
+```vim
+let g:rspec_file_regexp = "_\\(test\\|spec\\).rb$"
+```
+
 ## Running tests
 
 Tests are written using [`vim-vspec`](https://github.com/kana/vim-vspec)
