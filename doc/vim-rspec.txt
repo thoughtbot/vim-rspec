@@ -1,0 +1,106 @@
+*vim-rspec.txt* run RSpec from within vim
+
+INTRODUCTION                                    *vim-rspec*
+
+A lightweight RSpec runner for Vim and MacVim.
+
+Repo:    https://github.com/thoughtbot/vim-rspec
+
+FUNCTIONS                                       *vim-rspec-functions*
+
+vim-rspec provides four functions for executing your specs:
+
+                                                *all-specs* *RunAllSpecs()*
+:RunAllSpecs()          Run all spec files in the project.
+                        Equivalent to running
+
+                            rspec spec
+
+                                                *current-spec-file* *RunCurrentSpecFile()*
+:RunCurrentSpecFile()   If the current file is a spec file, all the examples in
+                        the current file are run. Equivalent to running
+
+                            rspec spec/my_spec.rb
+
+                        If it's not a spec file then the |last-spec| is run again.
+
+                                                *nearest-spec* *RunNearestSpec()*
+:RunNearestSpec()       If the current file is a spec file, and the cursor is
+                        on or within an example (e.g. an it block) then only
+                        that example is run. Otherwise, the example group
+                        (e.g. a describe block) which the cursor is within is
+                        run. Equivalent to running
+
+                            rspec spec/my_spec.rb:23
+
+                        For more details see:
+
+                            https://relishapp.com/rspec/rspec-core/docs/command-line/line-number-appended-to-file-path
+
+                        If the current file is not a spec file then
+                        the last invocation of |RunNearestSpec| gets run again.
+
+                                                *last-spec*  *RunLastSpec()*
+:RunLastSpec()          Each time you run any of the other functions, the
+                        plugin records the rspec command which was run. This
+                        function runs that command again.
+
+KEY MAPPINGS                                    *vim-rspec-keymappings*
+
+vim-rspec doesn't set up any key mappings by default. Here are some example key
+mappings which you could add to your .vimrc: >
+
+  map <Leader>t :call RunCurrentSpecFile()<CR>
+  map <Leader>s :call RunNearestSpec()<CR>
+  map <Leader>l :call RunLastSpec()<CR>
+  map <Leader>a :call RunAllSpecs()<CR>
+<
+
+CUSTOM COMMAND                                   *vim-rspec-rspec_command*
+
+By default the rspec command executed is simply:
+
+    rspec {spec}
+
+Overwrite the g:rspec_command variable to execute a custom command.
+
+Example:
+>
+    let g:rspec_command = "!rspec --drb {spec}"
+<
+This g:rspec_command variable can be used to support any number of test runners or pre-loaders. For example, to use Dispatch:
+>
+    let g:rspec_command = "Dispatch rspec {spec}"
+<
+Or, Dispatch and Zeus together:
+>
+    let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
+<
+
+CUSTOM RUNNER                                   *vim-rspec-rspec_runner*
+
+Overwrite the g:rspec_runner variable to set a custom launch script.
+
+                                                *vim-rspec-osx_terminal*
+At the moment there are two MacVim-specific runners, i.e. os_x_terminal and
+os_x_iterm. The default is os_x_terminal, but you can set this to anything you
+want, provided you include the appropriate script inside the plugin's bin/
+directory.
+
+iTerm instead of Terminal                       *vim-rspec-osx_iterm*
+
+If you use iTerm, you can set g:rspec_runner to use the included iterm
+launching script. This will run the specs in the last session of the current
+terminal.
+>
+    let g:rspec_runner = "os_x_iterm"
+<
+                                                *vim-rspec-osx_iterm2*
+If you use the iTerm2 nightlies, the os_x_iterm runner will not work (due to
+AppleScript incompatibilities between the old and new versions of iTerm2).
+
+Instead use the os_x_iterm2 runner, configure it like so:
+>
+    let g:rspec_runner = "os_x_iterm2"
+<
+ vim:tw=78:et:ft=help:norl:
