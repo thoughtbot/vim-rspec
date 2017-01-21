@@ -38,6 +38,11 @@ function! RunLastSpec()
   endif
 endfunction
 
+function! RunFailingSpecs()
+  let s:last_spec = "spec --only-failures"
+  call s:RunSpecs(s:last_spec)
+endfunction
+
 " === local functions ===
 
 function! s:RunSpecs(spec_location)

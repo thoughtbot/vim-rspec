@@ -173,3 +173,25 @@ describe "RunAllSpecs"
     Expect Ref("s:last_spec") == "spec"
   end
 end
+
+describe "RunFailingSpecs"
+  before
+    let g:rspec_command = "!rspec {spec}"
+  end
+
+  after
+    unlet g:rspec_command
+  end
+
+  it "runs failing specs"
+    call Call("RunFailingSpecs")
+
+    Expect Ref("s:rspec_command") == "!rspec spec --only-failures"
+  end
+
+  it "sets s:last_spec to 'spec --only-failures'"
+    call Call("RunFailingSpecs")
+
+    Expect Ref("s:last_spec") == "spec --only-failures"
+  end
+end
