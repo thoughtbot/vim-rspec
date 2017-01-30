@@ -1,10 +1,5 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
-let s:default_command = "rspec {spec}"
 let s:force_gui = 0
-
-if !exists("g:rspec_runner")
-  let g:rspec_runner = "os_x_terminal"
-endif
 
 function! RunAllSpecs()
   let s:last_spec = ""
@@ -51,32 +46,42 @@ function! s:InSpecFile()
 endfunction
 
 function! s:RspecCommand()
-  if s:RspecCommandProvided() && s:IsMacGui()
-    let l:command = s:GuiCommand(g:rspec_command)
-  elseif s:RspecCommandProvided()
+  if s:RspecCommandProvided()
     let l:command = g:rspec_command
-  elseif s:IsMacGui()
-    let l:command = s:GuiCommand(s:default_command)
   else
-    let l:command = s:DefaultTerminalCommand()
+    let l:command = s:DefaultCommand()
   endif
 
-  return l:command
+  if s:IsMacGui() && s:RspecRunnerProvided()
+    return s:RunnerCommand(l:command)
+  else
+    return l:command
+  endif
 endfunction
 
 function! s:RspecCommandProvided()
   return exists("g:rspec_command")
 endfunction
 
-function! s:DefaultTerminalCommand()
-  return "!" . s:ClearCommand() . " && echo " . s:default_command . " && " . s:default_command
+function! s:RspecRunnerProvided()
+  return exists("g:rspec_runner")
+endfunction
+
+function! s:DefaultCommand()
+  let l:default_command = "rspec {spec}"
+
+  if s:IsMacGui()
+    return l:default_command
+  else
+    return "!" . s:ClearCommand() . " && echo " . l:default_command . " && " . l:default_command
+  endif
 endfunction
 
 function! s:CurrentFilePath()
   return @%
 endfunction
 
-function! s:GuiCommand(command)
+function! s:RunnerCommand(command)
   return "silent ! '" . s:plugin_path . "/bin/" . g:rspec_runner . "' '" . a:command . "'"
 endfunction
 

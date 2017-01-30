@@ -50,32 +50,33 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
-### Custom runners
+### MacVim command runners
 
-Overwrite the `g:rspec_runner` variable to set a custom launch script. At the
-moment there are two MacVim-specific runners, i.e. `os_x_terminal` and
-`os_x_iterm`. The default is `os_x_terminal`, but you can set this to anything
-you want, provided you include the appropriate script inside the plugin's
-`bin/` directory.
+If you are running your specs from MacVim,
+you must set `g:rspec_runner` or `g:rspec_command`, or both.
 
-#### iTerm instead of Terminal
-
-If you use iTerm, you can set `g:rspec_runner` to use the included iterm
-launching script. This will run the specs in the last session of the current
-terminal.
+The `g:rspec_runner` variable specifies which launch script will be used:
 
 ```vim
 let g:rspec_runner = "os_x_iterm"
 ```
 
-If you use the iTerm2 nightlies, the `os_x_iterm` runner will not work
-(due to AppleScript incompatibilities between the old and new versions of iTerm2).
+At the moment the following MacVim-specific runners are supported:
 
-Instead use the `os_x_iterm2` runner, configure it like so:
+* `os_x_terminal` for OSX Terminal.app
+* `os_x_iterm` for iTerm2 stable release
+  * If you use the iTerm2 nightlies,
+  this runner will not work due to AppleScript incompatibilities
+  between the old and new versions of iTerm2
+* `os_x_iterm2` for iTerm2 nightly builds
 
-```vim
-let g:rspec_runner = "os_x_iterm2"
-```
+If `g:rspec_runner` isn't set,
+the `g:rspec_command` will be executed from MacVim without a runner.
+This enables commands like `Dispatch rspec {spec}` to work in GUI mode.
+
+You can set `g:rspec_runner` to anything you want,
+provided you include the appropriate script
+inside the plugin's `bin/` directory.
 
 ## Running tests
 
