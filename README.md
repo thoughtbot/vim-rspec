@@ -50,6 +50,17 @@ Or, [Dispatch](https://github.com/tpope/vim-dispatch) and
 let g:rspec_command = "compiler rspec | set makeprg=zeus | Make rspec {spec}"
 ```
 
+#### Neovim
+
+Neovim has [a new behavior for handling bang commands](https://github.com/neovim/neovim/issues/1496#issuecomment-63691483).
+Because of this, using `vim-rspec` with Neovim will output the results of the specs, but the output will be missing color.
+
+In order to fix this, you can use the [Custom Command](https://github.com/thoughtbot/vim-rspec#custom-command) option to run the specs with the new terminal commands that Neovim provides.
+
+```vim
+let g:rspec_command = "term rspec #{spec}"
+```
+
 ### Custom runners
 
 Overwrite the `g:rspec_runner` variable to set a custom launch script. At the
