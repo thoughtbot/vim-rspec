@@ -73,7 +73,7 @@ function! s:DefaultTerminalCommand()
 endfunction
 
 function! s:CurrentFilePath()
-  return @%
+  return fnamemodify(expand("%"), ":~:.")
 endfunction
 
 function! s:GuiCommand(command)
