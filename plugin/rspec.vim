@@ -1,6 +1,7 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
 let s:default_command = "rspec {spec}"
 let s:force_gui = 0
+let s:rspec_file_regexp = "_spec.rb$"
 
 if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
@@ -47,7 +48,11 @@ function! s:RunSpecs(spec_location)
 endfunction
 
 function! s:InSpecFile()
-  return match(expand("%"), "_spec.rb$") != -1
+  if s:RspecFileRegexpProvided()
+    return match(expand("%"), g:rspec_file_regexp) != -1
+  else
+    return match(expand("%"), s:rspec_file_regexp) != -1
+  endif
 endfunction
 
 function! s:RspecCommand()
@@ -66,6 +71,10 @@ endfunction
 
 function! s:RspecCommandProvided()
   return exists("g:rspec_command")
+endfunction
+
+function! s:RspecFileRegexpProvided()
+  return exists("g:rspec_file_regexp")
 endfunction
 
 function! s:DefaultTerminalCommand()
