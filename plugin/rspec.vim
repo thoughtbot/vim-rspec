@@ -1,5 +1,4 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
-let s:default_command = "rspec {spec}"
 let s:force_gui = 0
 
 if !exists("g:rspec_runner")
@@ -56,7 +55,7 @@ function! s:RspecCommand()
   elseif s:RspecCommandProvided()
     let l:command = g:rspec_command
   elseif s:IsMacGui()
-    let l:command = s:GuiCommand(s:default_command)
+    let l:command = s:GuiCommand(s:DefaultCommand())
   else
     let l:command = s:DefaultTerminalCommand()
   endif
@@ -68,8 +67,17 @@ function! s:RspecCommandProvided()
   return exists("g:rspec_command")
 endfunction
 
+function! s:DefaultCommand()
+  if filereadable("bin/rspec")
+    return "bin/rspec {spec}"
+  else
+    return "rspec {spec}"
+  end
+endfunction
+
 function! s:DefaultTerminalCommand()
-  return "!" . s:ClearCommand() . " && echo " . s:default_command . " && " . s:default_command
+  let l:command = s:DefaultCommand()
+  return "!" . s:ClearCommand() . " && echo " . l:command . " && " . l:command
 endfunction
 
 function! s:CurrentFilePath()
