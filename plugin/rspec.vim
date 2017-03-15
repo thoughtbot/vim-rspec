@@ -69,7 +69,7 @@ function! s:RspecCommandProvided()
 endfunction
 
 function! s:DefaultTerminalCommand()
-  return "!" . s:ClearCommand() . " && echo " . s:default_command . " && " . s:default_command
+  return "!" . s:ClearCommand() . s:AndCommand() . "echo " . s:default_command . s:AndCommand() . s:default_command
 endfunction
 
 function! s:CurrentFilePath()
@@ -85,6 +85,14 @@ function! s:ClearCommand()
     return "cls"
   else
     return "clear"
+  endif
+endfunction
+
+function! s:AndCommand()
+  if &shell[-4:] == "fish"
+    return "; and "
+  else
+    return " && "
   endif
 endfunction
 
