@@ -44,6 +44,7 @@ function! s:RunSpecs(spec_location)
   let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:spec_location, "g")
 
   execute s:rspec_command
+  redraw!
 endfunction
 
 function! s:InSpecFile()
