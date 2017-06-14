@@ -44,7 +44,9 @@ function! s:RunSpecs(spec_location)
   let s:rspec_command = substitute(s:RspecCommand(), "{spec}", a:spec_location, "g")
 
   execute s:rspec_command
-  redraw!
+  if s:UserWantsRedrawAfterSpecs()
+    redraw!
+  endif
 endfunction
 
 function! s:InSpecFile()
@@ -67,6 +69,10 @@ endfunction
 
 function! s:RspecCommandProvided()
   return exists("g:rspec_command")
+endfunction
+
+function! s:UserWantsRedrawAfterSpecs()
+  return exists("g:redraw_after_specs")
 endfunction
 
 function! s:DefaultTerminalCommand()
