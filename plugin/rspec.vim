@@ -31,7 +31,7 @@ function! RunExamples() range
     let line_arg = ":" . join(range(a:firstline, a:lastline), ":")
 
     let s:last_spec_file = s:CurrentFilePath()
-    let s:last_spec_example = s:last_spec_file . line_arg
+    let s:last_spec_examples = s:last_spec_file . line_arg
     let s:last_spec = s:last_spec_examples
     call s:RunSpecs(s:last_spec_examples)
   elseif exists("s:last_spec_examples")
