@@ -21,14 +21,21 @@ function! RunCurrentSpecFile()
   endif
 endfunction
 
+" Preserved for backwards compatibility
 function! RunNearestSpec()
+  call RunExamples()
+endfunction
+
+function! RunExamples() range
   if s:InSpecFile()
+    let line_arg = ":" . join(range(a:firstline, a:lastline), ":")
+
     let s:last_spec_file = s:CurrentFilePath()
-    let s:last_spec_file_with_line = s:last_spec_file . ":" . line(".")
-    let s:last_spec = s:last_spec_file_with_line
-    call s:RunSpecs(s:last_spec_file_with_line)
-  elseif exists("s:last_spec_file_with_line")
-    call s:RunSpecs(s:last_spec_file_with_line)
+    let s:last_spec_examples = s:last_spec_file . line_arg
+    let s:last_spec = s:last_spec_examples
+    call s:RunSpecs(s:last_spec_examples)
+  elseif exists("s:last_spec_examples")
+    call s:RunSpecs(s:last_spec_examples)
   endif
 endfunction
 
