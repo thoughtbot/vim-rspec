@@ -1,5 +1,7 @@
 let s:plugin_path = expand("<sfile>:p:h:h")
 let s:default_command = "rspec {spec}"
+let s:fish_and = "; and "
+let s:bash_and = " && "
 let s:force_gui = 0
 
 if !exists("g:rspec_runner")
@@ -69,7 +71,11 @@ function! s:RspecCommandProvided()
 endfunction
 
 function! s:DefaultTerminalCommand()
-  return "!" . s:ClearCommand() . " && echo " . s:default_command . " && " . s:default_command
+  if $SHELL =~ "fish"
+    return "!" . s:ClearCommand() . s:fish_and . "echo " . s:default_command . s:fish_and . s:default_command
+  else
+    return "!" . s:ClearCommand() . s:bash_and . "echo " . s:default_command . s:bash_and . s:default_command
+  endif
 endfunction
 
 function! s:CurrentFilePath()
