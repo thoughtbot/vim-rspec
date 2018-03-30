@@ -12,6 +12,9 @@ Plugin 'thoughtbot/vim-rspec'
 
 If using zsh on OS X it may be necessary to move `/etc/zshenv` to `/etc/zshrc`.
 
+If using fish shell it is necessary to set the `$SHELL` environment variable if not set.
+eg: `set -Ux SHELL /usr/bin/fish`
+
 ## Configuration
 
 ### Key mappings
