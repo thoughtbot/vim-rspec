@@ -89,7 +89,7 @@ function! s:ClearCommand()
 endfunction
 
 function! s:IsMacGui()
-  return s:force_gui || (has("gui_running") && has("gui_macvim"))
+  return s:force_gui || (has("gui_running") && has("gui_macvim")) || has("gui_vimr")
 endfunction
 
 function! s:IsWindows()
