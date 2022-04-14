@@ -36,6 +36,12 @@ Example:
 let g:rspec_command = "!rspec --drb {spec}"
 ```
 
+If you want running spec with debugger(pry, debugger, etc), just
+declare this in your vim config.
+```vim
+let g:rspec_with_debug = 1
+```
+
 This `g:rspec_command` variable can be used to support any number of test
 runners or pre-loaders. For example, to use
 [Dispatch](https://github.com/tpope/vim-dispatch):

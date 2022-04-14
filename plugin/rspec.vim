@@ -2,6 +2,10 @@ let s:plugin_path = expand("<sfile>:p:h:h")
 let s:default_command = "rspec {spec}"
 let s:force_gui = 0
 
+if !exists("g:rspec_with_debug")
+  let g:rspec_with_debug = 0
+endif
+
 if !exists("g:rspec_runner")
   let g:rspec_runner = "os_x_terminal"
 endif
@@ -58,7 +62,11 @@ function! s:RspecCommand()
   elseif s:IsMacGui()
     let l:command = s:GuiCommand(s:default_command)
   else
-    let l:command = s:DefaultTerminalCommand()
+    if g:rspec_with_debug > 0
+      let l:command = s:TerminalCommandWithDebug()
+    else
+      let l:command = s:DefaultTerminalCommand()
+    endif
   endif
 
   return l:command
@@ -70,6 +78,10 @@ endfunction
 
 function! s:DefaultTerminalCommand()
   return "!" . s:ClearCommand() . " && echo " . s:default_command . " && " . s:default_command
+endfunction
+
+function! s:TerminalCommandWithDebug()
+  return "split | terminal "." { " . s:default_command . "  }"
 endfunction
 
 function! s:CurrentFilePath()
