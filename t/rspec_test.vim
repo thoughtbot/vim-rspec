@@ -91,6 +91,25 @@ describe "RunSpecs"
       end
     end
   end
+
+  context "when g:rspec_with_debug is defined"
+    before
+      let g:rspec_with_debug = 1
+    end
+
+    after
+      unlet g:rspec_with_debug
+    end
+
+    it "runs the current spec file at the current line"
+      call Set("s:last_spec_file_with_line", "model_spec.rb:42")
+      call Set("s:last_spec_file", "model_spec.rb")
+
+      call Call("RunNearestSpec")
+
+      Expect Ref("s:rspec_command") == "terminal { rspec controller_spec.rb:5 }"
+    end
+  end
 end
 
 describe "RunCurrentSpecFile"
